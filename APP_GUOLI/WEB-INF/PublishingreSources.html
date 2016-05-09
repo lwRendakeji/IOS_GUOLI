@@ -102,12 +102,12 @@
                               //$('.overlayCity').css('display','none');
                               });
       $('#dianjizhongdianchengshi').click(function(){
-				//X.city.showCitySelection(this.id);
-                             alert('重点城市');
+				X.city.showCitySelection(this.id);
+                          
 				});
       $('#start_city').click(function(){
-                //X.city.showCitySelection(this.id);
-                             alert('起始城市');
+                X.city.showCitySelection(this.id);
+                         
 			 });
     
       });
@@ -249,10 +249,8 @@
           },
           callback: function(){
           $('.overlayCity').css('display','none');
-          $("#dianji_CityList").text($('input[id="cityChoice"]').val().replace("市",""));
-          $('.div_overflow').remove();
-          ROWNUMBER="0";
-          getGoods2(ROWNUMBER);
+          $('#'+city_id).text($('input[id="cityChoice"]').val().replace("市",""));
+         
           }
           });
           
@@ -262,12 +260,9 @@
           function queding(){
               if($('input[id="cityChoice"]').val()!=''){
                   $('.overlayCity').css('display','none');
-                  
-                  $("#dianji_CityList").text($('input[id="cityChoice"]').val());
-                  $('.div_overflow').remove();
+                  $('#'+city_id).text($('input[id="cityChoice"]').val());
                   $('input[id="cityChoice"]').blur();
-                  ROWNUMBER="0";
-                  getGoods2(ROWNUMBER);
+                 
               }else{
                   alert('请输入城市名称');
               }
@@ -276,10 +271,10 @@
    
    //遮盖层点击事件
    function dd(){
-       $('.overlayCity').css('display','none');
-       $('.main_service_bottom').css('position','fixed');
-       $('input[id="cityChoice"]').blur();
-       
+       $('input[id="cityChoice"]').val('');
+      $('input[id="cityChoice"]').blur();
+      $('.overlayCity').css('display','none');
+    
    }
    
        </script>

@@ -9,6 +9,7 @@
 <script type="text/javascript" src="cities.js"></script>
 <link href="Getvehicle.css" rel="stylesheet" type="text/css" />
     <link href="X.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="hzw-city-picker.css">
 <script>
     var historyCondition,resultData,city_id,nomoreData = false;
     $(function(){
@@ -17,7 +18,8 @@
                               });
       historyCondition = X.html.getInputs();
       $('.detailBody').empty();
-      $("#dianji_CityList").text(X.isEmpty(X.cookie.get('cityname')) ? '' : X.cookie.get('cityname'));
+      //$("#dianji_CityList").text(X.isEmpty(X.cookie.get('cityname')) ? '' : X.cookie.get('cityname'));
+      $("#dianji_CityList").text('城市');
       if(X.getObjLenOrCompare(historyCondition,0)){
       getVehicleHistory();
       }else{
@@ -25,6 +27,7 @@
       }
       });
       function getVehicleNearBy(){
+          
           if(X.isEmpty($('#dianji_CityList').text())){
                X.dialog('请先选择一个城市');
               $('.overlayX').css('display','none');
@@ -34,7 +37,7 @@
           
           data.LAT = X.cookie.get("lat");
           data.LNG = X.cookie.get("lng");
-          data.CITY = $('#dianji_CityList').text();
+          if(($("#dianji_CityList").val())!='城市')data.CITY = $('#dianji_CityList').text();
           X.html.setOverlay();
           X.soap(data,'GetVehicle','getVehicleAround');
       }
@@ -144,14 +147,81 @@ function historyResult(jsonResult){
 </div>
 </div>
     <div class="detailBody"></div>
-    <div class="overlayCity">
-        <div class="search-citys">
+    <div class="overlayCity" onClick="dd();">
+        
+        <div id="search">
+            <input type="text" id="cityChoice" placeholder="点击获取城市">
+                <input id="queding" type="button" value="确定" onClick="queding();">
+                    </div>
+        <script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+        <script type="text/javascript" src="city-data.js"></script>
+        <script type="text/javascript" src="hzw-city-picker.min.js"></script>
+        <script>
+            var cityPicker = new HzwCityPicker({
+                  data: data,
+                  target: 'cityChoice',
+                  valType: 'k-v',
+                  hideCityInput: {
+                  name: 'city',
+                  id: 'city'
+               },
+                  hideProvinceInput: {
+                  name: 'province',
+                  id: 'province'
+               },
+               callback: function(){
+                   $('.overlayCity').css('display','none');
+                   $('#dianji_CityList').text($('input[id="cityChoice"]').val().replace("市",""));
+                   
+                   //换城市查询数据
+                   getVehicleNearBy()
+                   
+                   }
+               });
+           
+           cityPicker.init();
+           
+           <!-- 点击确定 事件 -->
+           function queding(){
+               if($('input[id="cityChoice"]').val()!=''){
+                   $('.overlayCity').css('display','none');
+                   $('#dianji_CityList').text($('input[id="cityChoice"]').val());
+                   $('input[id="cityChoice"]').blur();
+                   //换城市查询数据
+                  getVehicleNearBy()
+                   
+               }else{
+                   alert('请输入城市名称');
+               }
+               
+           }
+        
+        //遮盖层点击事件
+        function dd(){
+            $('input[id="cityChoice"]').val('');
+            $('input[id="cityChoice"]').blur();
+            $('.overlayCity').css('display','none');
+            
+        }
+        
+            </script>
+        
+    </div>
+
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- <div class="search-citys">
             <input class="text" id="city_name" type="text" placeholder="请输入城市中文或拼音 / 点击选择城市" oninput="X.city.keyup();"/>
             <div class="search-text" id="citys" onClick="X.city.blur(city_id,getVehicleNearBy);">
                 <ul></ul>
             </div>
-        </div>
-    </div>
+        </div> -->
 
 </body>
 </html>
