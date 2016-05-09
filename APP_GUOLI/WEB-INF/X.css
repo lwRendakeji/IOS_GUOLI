@@ -135,3 +135,13 @@ dl,ol,ul,li{list-style:none;}
     width:40%;margin:0 auto;
     text-align:content;
 }
+.NoData{
+    background-color:#FFF;
+    text-align:center;
+    font-size:18px;
+    color:black;
+    height: auto;
+    width:100%;
+    margin-top:10px;
+    
+}

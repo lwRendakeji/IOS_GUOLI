@@ -271,6 +271,10 @@
 		52FE96011C30D71600E84235 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52FE95FE1C30D71600E84235 /* Default@2x.png */; };
 		52FE96091C30E0B500E84235 /* main_publishsource1.png in Resources */ = {isa = PBXBuildFile; fileRef = 52FE96081C30E0B500E84235 /* main_publishsource1.png */; };
 		52FE960B1C30FDE800E84235 /* caozuoshuoming.html in Resources */ = {isa = PBXBuildFile; fileRef = 52FE960A1C30FDE800E84235 /* caozuoshuoming.html */; };
+		8E97728B1CE0605D006B928A /* jquery-2.1.3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 8E97728A1CE0605D006B928A /* jquery-2.1.3.min.js */; };
+		8E97728D1CE0609B006B928A /* city-data.js in Resources */ = {isa = PBXBuildFile; fileRef = 8E97728C1CE0609B006B928A /* city-data.js */; };
+		8E97728F1CE060D0006B928A /* hzw-city-picker.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 8E97728E1CE060D0006B928A /* hzw-city-picker.min.js */; };
+		8E9772931CE0626F006B928A /* hzw-city-picker.css in Resources */ = {isa = PBXBuildFile; fileRef = 8E9772921CE0626F006B928A /* hzw-city-picker.css */; };
 		8EA7D7CF1CDC8F6F0056E2E0 /* GLShop.html in Resources */ = {isa = PBXBuildFile; fileRef = 8EA7D7CE1CDC8F6F0056E2E0 /* GLShop.html */; };
 		8EA7D7D11CDC8F800056E2E0 /* GLShop.css in Resources */ = {isa = PBXBuildFile; fileRef = 8EA7D7D01CDC8F800056E2E0 /* GLShop.css */; };
 /* End PBXBuildFile section */
@@ -549,6 +553,10 @@
 		52FE95FE1C30D71600E84235 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		52FE96081C30E0B500E84235 /* main_publishsource1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = main_publishsource1.png; path = "WEB-INF/main_publishsource1.png"; sourceTree = "<group>"; };
 		52FE960A1C30FDE800E84235 /* caozuoshuoming.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = caozuoshuoming.html; path = "WEB-INF/caozuoshuoming.html"; sourceTree = "<group>"; };
+		8E97728A1CE0605D006B928A /* jquery-2.1.3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "jquery-2.1.3.min.js"; path = "WEB-INF/jquery-2.1.3.min.js"; sourceTree = "<group>"; };
+		8E97728C1CE0609B006B928A /* city-data.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "city-data.js"; path = "WEB-INF/city-data.js"; sourceTree = "<group>"; };
+		8E97728E1CE060D0006B928A /* hzw-city-picker.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "hzw-city-picker.min.js"; path = "WEB-INF/hzw-city-picker.min.js"; sourceTree = "<group>"; };
+		8E9772921CE0626F006B928A /* hzw-city-picker.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "hzw-city-picker.css"; path = "WEB-INF/hzw-city-picker.css"; sourceTree = "<group>"; };
 		8EA7D7CE1CDC8F6F0056E2E0 /* GLShop.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = GLShop.html; path = "WEB-INF/GLShop.html"; sourceTree = "<group>"; };
 		8EA7D7D01CDC8F800056E2E0 /* GLShop.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = GLShop.css; path = "WEB-INF/GLShop.css"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -593,11 +601,11 @@
 				52EDA7D51C228ED40014CBCD /* Abnormal.html */,
 				52FE960A1C30FDE800E84235 /* caozuoshuoming.html */,
 				52EDA7E61C228ED40014CBCD /* CityList.html */,
-				52EDA7F21C228ED40014CBCD /* DriverInfo.html */,
 				52073C871C27BB3A0086CA04 /* DriverSearch.html */,
 				52EDA7F71C228ED40014CBCD /* Evaluate.html */,
 				52EDA7F91C228ED40014CBCD /* EvaluateScore.html */,
 				52EDA8001C228ED40014CBCD /* FindKeyActivity.html */,
+				52EDA7F21C228ED40014CBCD /* DriverInfo.html */,
 				52EDA8021C228ED40014CBCD /* Getvehicle.html */,
 				52EDA8041C228ED40014CBCD /* GetVehicleSearch.html */,
 				52EDA8071C228ED40014CBCD /* GoodsFirm.html */,
@@ -720,7 +728,10 @@
 			children = (
 				52EDA7E01C228ED40014CBCD /* bootstrap.js */,
 				52EDA7E31C228ED40014CBCD /* cities.js */,
+				8E97728A1CE0605D006B928A /* jquery-2.1.3.min.js */,
 				52EDA80D1C228ED40014CBCD /* GUOLI_main.js */,
+				8E97728C1CE0609B006B928A /* city-data.js */,
+				8E97728E1CE060D0006B928A /* hzw-city-picker.min.js */,
 				52EDA81B1C228ED40014CBCD /* iscroll.js */,
 				52EDA81C1C228ED40014CBCD /* jquery-1.8.3.min.js */,
 				52EDA81D1C228ED40014CBCD /* jquery-1.11.2.min.js */,
@@ -728,10 +739,10 @@
 				52EDA81F1C228ED40014CBCD /* jquery.autocomplete.js */,
 				52EDA8201C228ED40014CBCD /* jquery.event.drag-1.5.min.js */,
 				52EDA8221C228ED40014CBCD /* jquery.mobile-1.4.5.js */,
-				52EDA8241C228ED40014CBCD /* jquery.touchSlider.js */,
 				52EDA8541C228ED40014CBCD /* obj.js */,
 				52EDA86E1C228ED40014CBCD /* PublishingreSources.js */,
 				52EDA8AE1C228ED40014CBCD /* X.js */,
+				52EDA8241C228ED40014CBCD /* jquery.touchSlider.js */,
 			);
 			name = js;
 			sourceTree = "<group>";
@@ -746,6 +757,7 @@
 				52EDA7E51C228ED40014CBCD /* CityList.css */,
 				52EDA7F11C228ED40014CBCD /* DriverInfo.css */,
 				52EDA7F61C228ED40014CBCD /* Evaluate.css */,
+				8E9772921CE0626F006B928A /* hzw-city-picker.css */,
 				8EA7D7D01CDC8F800056E2E0 /* GLShop.css */,
 				52EDA7F81C228ED40014CBCD /* EvaluateScore.css */,
 				52FE95F41C30D50F00E84235 /* caozuoshuoming.css */,
@@ -1023,6 +1035,7 @@
 				52EDA8EA1C228ED40014CBCD /* Getvehicle.css in Resources */,
 				52EDA8DF1C228ED40014CBCD /* Evaluate.css in Resources */,
 				52EDA97B1C228ED40014CBCD /* start.png in Resources */,
+				8E97728B1CE0605D006B928A /* jquery-2.1.3.min.js in Resources */,
 				52EDA8D51C228ED40014CBCD /* dd_scroll_3.jpg in Resources */,
 				52EDA9261C228ED40014CBCD /* logo.png in Resources */,
 				52EDA8DB1C228ED40014CBCD /* DriverInfo.html in Resources */,
@@ -1031,6 +1044,7 @@
 				52EDA9711C228ED40014CBCD /* ShareveHicle.html in Resources */,
 				52EDA9101C228ED40014CBCD /* line.png in Resources */,
 				52EDA8C21C228ED40014CBCD /* arrow_2.png in Resources */,
+				8E97728F1CE060D0006B928A /* hzw-city-picker.min.js in Resources */,
 				52EDA9191C228ED40014CBCD /* LoadingLoadList.css in Resources */,
 				52EDA9331C228ED40014CBCD /* main_sharesource.png in Resources */,
 				52EDA96B1C228ED40014CBCD /* service6.png in Resources */,
@@ -1091,6 +1105,7 @@
 				52EDA9441C228ED40014CBCD /* plugin_camera_bottom_bar.png in Resources */,
 				52EDA9941C228ED40014CBCD /* VehicleSearch.css in Resources */,
 				52EDA9041C228ED40014CBCD /* iscroll.js in Resources */,
+				8E97728D1CE0609B006B928A /* city-data.js in Resources */,
 				52EDA90F1C228ED40014CBCD /* left_uncheck.png in Resources */,
 				52EDA8F11C228ED40014CBCD /* grade.png in Resources */,
 				52EDA9231C228ED40014CBCD /* login_role.png in Resources */,
@@ -1212,6 +1227,7 @@
 				52EDA9071C228ED40014CBCD /* jquery-2.1.0.js in Resources */,
 				52EDA94A1C228ED40014CBCD /* plugin_camera_filenum.png in Resources */,
 				52EDA9141C228ED40014CBCD /* LinkVehicle.css in Resources */,
+				8E9772931CE0626F006B928A /* hzw-city-picker.css in Resources */,
 				52F6223F1C35347900C3E184 /* Images.xcassets in Resources */,
 				52EDA98C1C228ED40014CBCD /* Track.css in Resources */,
 				52EDA9131C228ED40014CBCD /* LinkDriver.html in Resources */,
