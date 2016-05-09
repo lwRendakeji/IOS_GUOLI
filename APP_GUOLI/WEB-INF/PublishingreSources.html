@@ -7,6 +7,7 @@
 <title>货源发布</title>
     <link href="X.css" rel="stylesheet" type="text/css"/>
     <link href="PublishingreSources.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="hzw-city-picker.css">
 <script type="text/javascript" src="jquery-2.1.0.js"></script>
 <script type="text/javascript" src="X.js"></script>
 <script type="text/javascript" src="cities.js"></script>
@@ -102,9 +103,11 @@
                               });
       $('#dianjizhongdianchengshi').click(function(){
 				X.city.showCitySelection(this.id);
+                          
 				});
       $('#start_city').click(function(){
                 X.city.showCitySelection(this.id);
+                         
 			 });
     
       });
@@ -222,13 +225,67 @@
   <div class="publishingresources_tableDiv_button">发布</div>
   </a>
 </div>
-<div class="overlayCity">
-    <div class="search-citys">
-        <input class="text" id="city_name" type="text" placeholder="请输入城市中文或拼音 / 点击选择城市" oninput="X.city.keyup();"/>
+<div class="overlayCity" onClick="dd();">
+   
+   <div id="search">
+       <input type="text" id="cityChoice" placeholder="点击获取城市">
+           <input id="queding" type="button" value="确定" onClick="queding();">
+               </div>
+   <script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+   <script type="text/javascript" src="city-data.js"></script>
+   <script type="text/javascript" src="hzw-city-picker.min.js"></script>
+   <script>
+       var cityPicker = new HzwCityPicker({
+          data: data,
+          target: 'cityChoice',
+          valType: 'k-v',
+          hideCityInput: {
+          name: 'city',
+          id: 'city'
+          },
+          hideProvinceInput: {
+          name: 'province',
+          id: 'province'
+          },
+          callback: function(){
+          $('.overlayCity').css('display','none');
+          $('#'+city_id).text($('input[id="cityChoice"]').val().replace("市",""));
+         
+          }
+          });
+          
+          cityPicker.init();
+          
+          <!-- 点击确定 事件 -->
+          function queding(){
+              if($('input[id="cityChoice"]').val()!=''){
+                  $('.overlayCity').css('display','none');
+                  $('#'+city_id).text($('input[id="cityChoice"]').val());
+                  $('input[id="cityChoice"]').blur();
+                 
+              }else{
+                  alert('请输入城市名称');
+              }
+              
+          }
+   
+   //遮盖层点击事件
+   function dd(){
+       $('input[id="cityChoice"]').val('');
+      $('input[id="cityChoice"]').blur();
+      $('.overlayCity').css('display','none');
+    
+   }
+   
+       </script>
+   
+</div>
+<!-- <div class="search-citys">
+ <input class="text" id="city_name" type="text" placeholder="请输入城市中文或拼音 / 点击选择城市" oninput="X.city.keyup();"/>
         <div class="search-text" id="citys" onClick="X.city.blur(city_id);">
             <ul></ul>
         </div>
-    </div>
+    </div> -->
 </div>
 </body>
 

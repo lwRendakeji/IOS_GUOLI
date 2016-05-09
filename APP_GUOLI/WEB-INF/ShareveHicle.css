@@ -41,7 +41,7 @@ body {
 .vehicle_top .vehicle_home {
     float: right;
     height: 30px;
-    width: 70px;
+    width: 90px;
 }
 
 .vehicle_top .vehicle_home a {
@@ -49,16 +49,24 @@ body {
     color: #FFF;
     text-decoration: none;
 }
-.vehicle_top .vehicle_home div {
+/*.vehicle_top .vehicle_home div {
     float: left;
     height: 30px;
     text-align: center;
-}
-.vehicle_top .vehicle_home a div img {
-    position: relative;
-    top: 10px;
-    height: 30px;
+}*/
+#dianji_CityList {
     width:30px;
+    overflow:auto;
+    display:inline;
+    color:#FFF;
+}
+
+.vehicle_top .vehicle_home a span img {
+    width:30px;
+    height:30px;
+    position:relative;
+    top:8px;
+    
 }
 
 

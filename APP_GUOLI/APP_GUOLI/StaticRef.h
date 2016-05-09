@@ -19,7 +19,7 @@ static const NSString *APIKEY = @"befde4c0558df3bac630b9e07c31be37";    //百度
 //static const NSString *WEBSERVICE_ID = @"app.ahglwl.com";             //正式服务器地址
 //static const NSString *WEBSERVICE_NAME = @"AndroidServiceGuoli";   //正式服务器应用名称
 
-static const NSString *WEBSERVICE_ID = @"192.168.1.115";        //服务器地址
+static const NSString *WEBSERVICE_ID = @"192.168.1.104";        //服务器地址
 static const NSString *WEBSERVICE_NAME = @"AndroidServiceDriver";   //服务器应用名称
 
 #endif

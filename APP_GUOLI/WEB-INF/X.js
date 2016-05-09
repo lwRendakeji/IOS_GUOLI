@@ -770,9 +770,10 @@ keyup:function(e){
     },
 showCitySelection:function(id){
         $('.overlayCity').css('display','block');
-        $('#city_name').val('');
+    $('input[id="cityChoice"]').focus();
+        /*$('#city_name').val('');
         $('#citys ul').empty();
-        $('#city_name').focus();
+        $('#city_name').focus();*/
         city_id = id;
     }
 }

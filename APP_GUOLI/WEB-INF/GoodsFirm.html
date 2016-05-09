@@ -12,6 +12,10 @@
     <script type="text/javascript" src="jquery-2.1.0.js"></script>
 <script>
     var clickFlag = true,goodsIndex;//阻止事件冒泡
+    var ROWNUMBER = "0";//分页
+    var num="10";//每次加载多少条数据
+    var flag=false;//判断返回数据是否为空
+    
     $(function(){
       X.snail();
       var data = {};
@@ -20,11 +24,22 @@
        X.html.setOverlay();
       X.soap(data,'GoodsPublishService','getGoods');
       });
-    function resultList(jsonResult){
+//分页
+function getGoods2(ROWNUMBER){
+  var data = {};
+  data.USER_ID = X.cookie.get('username');
+  data.ROLE_ID = X.cookie.get('role_id');
+  data.ROWNUMBER = ROWNUMBER;
+
+  X.soap(data,'GoodsPublishService','getGoods');
+  
+}
+
+function resultList(jsonResult){
         if(X.html.connError(jsonResult)) return;
         var result = jsonResult.result;
         var cls = 'detailBody';
-        $('.'+cls).remove();
+       // $('.'+cls).remove();
         if(!result instanceof Array){
             if(X.getObjLenOrCompare(result, 0)){
                 var array = new Array();
@@ -34,7 +49,8 @@
         }
         //判断result是否为空
         if(result.length == 0){
-            $('.'+cls).append('<div class="divTable" style="text-align:center">未找到任何数据</div>');
+            flag=true;//判断返回结果
+            //$('.'+cls).append('<div class="divTable" style="text-align:center">未找到任何数据</div>');
             $('.overlayX').css('display','none');
             return false;
         }
@@ -45,7 +61,42 @@
             return;
         }
         if($('.'+cls).length <= 0){
+            
             $('body').append('<div class="'+cls+'"></div>');
+             $(".detailBody").css({"overflow":"scroll"});
+             if(X.cookie.get('iphoneversion')==4){
+              $(".detailBody").css({"height":"370px"});
+              $('body').css('height','370px');
+             }
+             if(X.cookie.get('iphoneversion')==6){
+                 $(".detailBody").css({"height":"500px"});
+                 $('body').css('height','500px');
+             }
+             if(X.cookie.get('iphoneversion')=='ipad'){
+                 $(".detailBody").css({"height":"1000px"});
+                 $('body').css('height','1000px');
+             }
+             $(".detailBody").scroll(function() {
+                   var $this =$(this),
+                   viewH =$(this).height(),//可见高度
+                   contentH =$(this).get(0).scrollHeight,//内容高度
+                   scrollTop =$(this).scrollTop();//滚动高度
+                   
+                   if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
+                   if(!flag){
+                   X.html.setOverlay();
+                   setTimeout(function(){
+                              var las_number = Number(ROWNUMBER) + Number(num);
+                              ROWNUMBER=las_number;
+                              getGoods2(ROWNUMBER);
+                              }, 1000);
+                   }
+                   
+                   }
+               
+               
+              });//滚动事件结束
+               
         }
         $('.'+cls).each(function(){
           var div = $(this);
@@ -147,7 +198,7 @@ function deleteGoods(jsonResult){
             
   </div>
 </div>
-    <div class="detailBody">
+<!--    <div class="detailBody">-->
     </div>
 </body>
 </html>
