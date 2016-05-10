@@ -29,6 +29,8 @@
 @property (strong,nonatomic) NSString *webservice_subname;
 @property (strong,nonatomic) NSString *scaleSize;
 @property int picIndex;
+@property BOOL isBackground;
+//@property BOOL isFirstRun;      //是否第一次运行程序，用以判断是否清空
 
 
 @end
@@ -59,6 +61,8 @@
     __block NSString *iphoneVersion;
     __block CGRect rect;
     dispatch_once(&onceToken, ^{
+        self.isBackground = false;
+//        self.isFirstRun = true;
         self.webservice_id = [WEBSERVICE_ID substringFromIndex:0];
         self.webservice_name = [WEBSERVICE_NAME substringFromIndex:0];
         self.webservice_port = [WEBSERVICE_PORT substringFromIndex:0];
@@ -144,14 +148,55 @@
     //[webView loadRequest:request];
     
     //定位代码
+    [self getLocation];
+    
+    //注册app进入后台和进入前台的事件 xwb 2016-05-09
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:UIApplicationWillTerminateNotification object:nil];
+}
+//-(void) applicationWillTerminate:(NSNotification *) notification{
+//    NSMutableDictionary *dictionary = [Util readFromFile:[LOCATEFILENAME substringFromIndex:0]];
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[Util transDictionaryToSoapMessage:dictionary] delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    NSLog(@"%@",[Util transDictionaryToSoapMessage:dictionary]);
+//    [alertView show];
+//}
+//监听home键,app进去后台   xwb 2016-05-09
+-(void) applicationWillResignActive:(NSNotification *)notification{
+    self.isBackground = true;
+    printf("background");
+}
+//监听app返回前台 xwb 2016-05-09
+-(void) applicationDidBecomeActive:(NSNotification *)notification{
+    self.isBackground = false;
+    User *user = [[User alloc] init];
+    if([user getUserInfo:@"a_t"] != nil && ![@"" isEqualToString:[user getUserInfo:@"a_t"]] && [Util isConnected]){
+        NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+        [dictionary setObject:[user getUserInfo:@"username"] forKey:@"APP_ID"];
+        [dictionary setObject:[user getUserInfo:@"a_t"] forKey:@"ADDRESS"];
+        [dictionary setObject:[user getUserInfo:@"c_t"] forKey:@"CITY"];
+        [dictionary setObject:[user getUserInfo:@"la_t"] forKey:@"LAT"];
+        [dictionary setObject:[user getUserInfo:@"ln_t"] forKey:@"LNG"];
+        [dictionary setObject:[user getUserInfo:@"m_t"] forKey:@"MSG"];
+        self.callMethod = @"offLineLocate";
+        [self soap:@"LogService" methodName:@"baiduMapLog" fields:[Util transDictionaryToSoapMessage:dictionary]];
+    }
+    printf("BecomeActive");
+}
+-(void) getLocation{
     //判断定位操作是否被允许
     if([CLLocationManager locationServicesEnabled]){
-        //NSLog(@"使用系统定位");
+        NSLog(@"使用系统定位");
         _locationManager = [[CLLocationManager alloc] init];
-        _locationManager.delegate = self;
-        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        _locationManager.distanceFilter = 1000.0f;
-        [_locationManager startUpdatingLocation];
+        _locationManager.delegate = self;//代理
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;//定位精确度
+        _locationManager.distanceFilter = 1.0f;//每隔1000米 更新一次信息
+        
+        _locationManager.distanceFilter=kCLDistanceFilterNone;//实时更新定位位置
+        _locationManager.pausesLocationUpdatesAutomatically=NO;//该模式是抵抗程序在后台被杀，申明不能够被暂停
+        [_locationManager requestWhenInUseAuthorization];   //ios8.0之后，需要主动申请定位授权   xwb 2016-05-09
+        [_locationManager startUpdatingLocation];//标准定位
+        //[_locationManager startMonitoringSignificantLocationChanges];//基站定位
     }else{
         //提示用户无法进行定位操作
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请确认开启定位功能" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -192,17 +237,17 @@
     [geocoder reverseGeocodeLocation:currLocation completionHandler:^(NSArray *array,NSError *error) {
         if(array.count > 0){
             placemark = [array objectAtIndex:0];
-            //NSLog(@"%@",placemark.name);
-            //NSDictionary *location = [placemark addressDictionary];
-            /*//NSLog(@"国家: %@",[location objectForKey:@"Country"]);
-            //NSLog(@"城市: %@",[location objectForKey:@"State"]);
-            //NSLog(@"区: %@",[location objectForKey:@"SubLocality"]);
-            //NSLog(@"位置: %@",placemark.name);
-            //NSLog(@"国家: %@",placemark.country);
-            //NSLog(@"城市: %@",placemark.locality);
-            //NSLog(@"区: %@",placemark.subLocality);
-            //NSLog(@"街道: %@",placemark.thoroughfare);
-            //NSLog(@"子街道: %@",placemark.subThoroughfare);*/
+            NSLog(@"%@",placemark.name);
+//            NSDictionary *location = [placemark addressDictionary];
+//            NSLog(@"国家: %@",[location objectForKey:@"Country"]);
+//            NSLog(@"城市: %@",[location objectForKey:@"State"]);
+//            NSLog(@"区: %@",[location objectForKey:@"SubLocality"]);
+//            NSLog(@"位置: %@",placemark.name);
+//            NSLog(@"国家: %@",placemark.country);
+//            NSLog(@"城市: %@",placemark.locality);
+//            NSLog(@"区: %@",placemark.subLocality);
+//            NSLog(@"街道: %@",placemark.thoroughfare);
+//            NSLog(@"子街道: %@",placemark.subThoroughfare);
             //获取城市
             NSString *city = placemark.locality;
             if(!city){
@@ -212,23 +257,54 @@
             //设定城市
             [user setUserInfo:@"cityname" value:city];
             //判断是否将定为信息保存到服务器
-            NSString *username = [user getUserInfo:@"username"];
-            NSString *lastLocateTime = [user getUserInfo:[NSString stringWithFormat:@"%@_locatetime",username]];
-            NSDate *date = [NSDate date];
-            NSCalendar *calendar = [NSCalendar currentCalendar];
-            unsigned int unitFlags = NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
-            NSDateComponents *d = [calendar components:unitFlags fromDate:date];
-            if(lastLocateTime == nil || [@"" isEqualToString:lastLocateTime] || labs([[[lastLocateTime componentsSeparatedByString:@":"] objectAtIndex:0] intValue] - [d hour]) >= 2){
-                NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-                [dictionary setObject:[user getUserInfo:@"username"] forKey:@"APP_ID"];
-                [dictionary setObject:placemark.name forKey:@"ADDRESS"];
-                [dictionary setObject:placemark.locality forKey:@"CITY"];
-                [dictionary setObject:txtLat forKey:@"LAT"];
-                [dictionary setObject:txtLng forKey:@"LNG"];
-                [user setUserInfo:@"lat" value:txtLat];
-                [user setUserInfo:@"lng" value:txtLng];
-                [self soap:@"LogService" methodName:@"baiduMapLog" fields:[Util transDictionaryToSoapMessage:dictionary]];
+            if(self.isBackground){
+                //如果程序是在后台,则将定位信息保存在user中
+                NSString *a_t = [user getUserInfo:@"a_t"];
+                if(a_t == nil || [@"" isEqualToString:a_t]) a_t = placemark.name;
+                else a_t = [a_t stringByAppendingFormat:@";%@",placemark.name];
+                [user setUserInfo:@"a_t" value:a_t];
+                
+                NSString *c_t = [user getUserInfo:@"c_t"];
+                if(c_t == nil || [@"" isEqualToString:c_t]) c_t = placemark.locality;
+                else c_t = [c_t stringByAppendingFormat:@",%@",placemark.locality];
+                [user setUserInfo:@"c_t" value:c_t];
+                
+                NSString *la_t = [user getUserInfo:@"la_t"];
+                if(la_t == nil || [@"" isEqualToString:la_t]) la_t =txtLat;
+                else la_t = [la_t stringByAppendingFormat:@",%@",txtLat];
+                [user setUserInfo:@"la_t" value:la_t];
+                
+                NSString *ln_t = [user getUserInfo:@"ln_t"];
+                if(ln_t == nil || [@"" isEqualToString:ln_t]) ln_t = txtLng;
+                else ln_t = [ln_t stringByAppendingFormat:@",%@",txtLng];
+                [user setUserInfo:@"ln_t" value:ln_t];
+                
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+                NSString *locationString = [dateFormatter stringFromDate:[NSDate date]];
+                NSString *m_t = [user getUserInfo:@"m_t"];
+                if(m_t == nil || [@"" isEqualToString:m_t]) m_t = locationString;
+                else m_t = [m_t stringByAppendingFormat:@",%@",locationString];
+                [user setUserInfo:@"m_t" value:m_t];
+            }else{
+                NSString *username = [user getUserInfo:@"username"];
+                NSString *lastLocateTime = [user getUserInfo:[NSString stringWithFormat:@"%@_locatetime",username]];
+                NSDate *date = [NSDate date];
+                NSCalendar *calendar = [NSCalendar currentCalendar];
+                unsigned int unitFlags = NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
+                NSDateComponents *d = [calendar components:unitFlags fromDate:date];
+                if(lastLocateTime == nil || [@"" isEqualToString:lastLocateTime] || labs([[[lastLocateTime componentsSeparatedByString:@":"] objectAtIndex:0] intValue] - [d hour]) >= 2){
+                    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+                    [dictionary setObject:[user getUserInfo:@"username"] forKey:@"APP_ID"];
+                    [dictionary setObject:placemark.name forKey:@"ADDRESS"];
+                    [dictionary setObject:placemark.locality forKey:@"CITY"];
+                    [dictionary setObject:txtLat forKey:@"LAT"];
+                    [dictionary setObject:txtLng forKey:@"LNG"];
+                    [self soap:@"LogService" methodName:@"baiduMapLog" fields:[Util transDictionaryToSoapMessage:dictionary]];
+                }
             }
+            [user setUserInfo:@"lat" value:txtLat];
+            [user setUserInfo:@"lng" value:txtLng];
             //NSLog(@"%@",city);
         }else if(error == nil && [array count] == 0){
             //NSLog(@"No results were returned");
@@ -237,9 +313,9 @@
         }
     }];
     //如果定位成功，就关闭定位
-    if([txtLat intValue] > 0 && [txtLng intValue] > 0){
-        [_locationManager stopUpdatingLocation];
-    }
+//    if([txtLat intValue] > 0 && [txtLng intValue] > 0){
+//        [_locationManager stopUpdatingLocation];
+//    }
 }
 //定位失败
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
@@ -289,7 +365,8 @@
                                        ,self.webservice_name
                                        ,self.webservice_subname
                                        ,serviceName]];
-    //NSLog(@"创建请求");
+    NSLog(@"创建请求");
+    NSLog(@"%@",soapMsg);
     //根据上面的URL创建一个请求
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
     NSString *msgLength = [NSString stringWithFormat:@"%lu",(unsigned long)[soapMsg length]];
@@ -346,11 +423,11 @@
 
 //完成接受数据时调用
 -(void) connectionDidFinishLoading:(NSURLConnection *)connection{
-    //NSLog(@"完成接受数据");
+    NSLog(@"完成接受数据");
     //NSLog(@"webData length,%lu",(unsigned long)[webData length]);
     NSString *theXML = [[NSString alloc] initWithBytes:[webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
     //打印出得到的XML
-    //NSLog(@"返回值:%@",theXML);
+    NSLog(@"返回值:%@",theXML);
     //如果需要调用的返回方法不为空，则开始拼接字符串
     if(![self.resultMethod isEqualToString:@""]){
         if([theXML rangeOfString:@"Error report"].location != NSNotFound){
@@ -425,10 +502,18 @@
         if(self.picIndex >= [imageData count]){
             [self callJs:@"{\"result\":\"true\"}"];
         }
+    }else if([@"offLineLocate" isEqualToString:self.callMethod]){
+        User *user = [[User alloc] init];
+        //清空定位纪录
+        [user setUserInfo:@"a_t" value:@""];
+        [user setUserInfo:@"c_t" value:@""];
+        [user setUserInfo:@"la_t" value:@""];
+        [user setUserInfo:@"ln_t" value:@""];
+        [user setUserInfo:@"m_t" value:@""];
     }else{
         NSString *result = [[NSString alloc] initWithFormat:@"{\"result\":[%@}",jsonResult];
         [self callJs:result];
-        //NSLog(@"解析XML结果:%@",result);
+        NSLog(@"解析XML结果:%@",result);
     }
 }
 
@@ -663,9 +748,12 @@
         //[UIView animateWithDuration:0.5 animations:^{alert.alpha = 0.0;} completion:^(BOOL finished){[alert setHidden:YES];[alert dismissWithClickedButtonIndex:nil animated:YES];}];
     }else if([[requestString uppercaseString] rangeOfString:@"LOGOUT://"].location != NSNotFound){
         User *user = [[User alloc] init];
+        NSString *user_id = [user getUserInfo:@"username"];
+        NSLog(@"user_id:%@",user_id);
         [user remove:@"username"];
         [user remove:@"password"];
         [user remove:@"rememberflag"];
+        [self soap:@"LoginService" methodName:@"offLineStatus" fields:[NSString stringWithFormat:@"<user_id>%@</user_id>",user_id]];
         //NSLog(@"logout");
         return NO;
     }else if([[requestString uppercaseString] rangeOfString:@"GETWHETHER://"].location != NSNotFound){
@@ -752,6 +840,7 @@
         [user setUserInfo:@"role_id" value:[dictionary objectForKey:@"ROLE_ID"]];
         [user setUserInfo:@"rememberflag" value:[self.logInfo objectForKey:@"rememberflag"]];
         [user setUserInfo:@"firstinstall" value:@"false"];
+        [user setUserInfo:@"username" value:[self.logInfo objectForKey:@"username"]];
     }
     //NSLog(@"setUserInfo:%@",data);
     [self callJs:data];
