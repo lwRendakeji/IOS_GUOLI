@@ -35,7 +35,11 @@
        function getNotice(){
             var data = {};
             data.PHONE = X.cookie.get('username');
+            //data.PHONE ='xndq';
             data.PHONE_TYPE = '';
+            
+            //alert(data.PHONE+'--'+data.PHONE_TYPE);
+            
             X.html.setOverlay();
             X.soap(data,'NoticeService','getNotice','noticeResult');
         }
