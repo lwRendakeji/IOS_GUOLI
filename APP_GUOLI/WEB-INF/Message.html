@@ -2,7 +2,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=320,maximum-scale=1,initial-scale=1.0,minimum-scale=0.1,user-scalable=no">    <meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=320,maximum-scale=1,initial-scale=1.0,minimum-scale=0.1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
 <title>途易行</title>
 <link href="Message.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="X.js"></script>
@@ -10,17 +11,17 @@
     <script>
         var result;
         $(function(){
-            clickDetails_1();
+           clickDetails_1();
           });
         function noticeResult(jsonResult){
-            result = jsonResult.result;
+           result = jsonResult.result;
             $('.table tbody').empty();
             if(result.length>0){
                 for(var i=0;i<result.length;i++){
                     if(!X.getObjLenOrCompare(result[i],0)) continue;
-                    $('.table').append('<tr><td><img src="arrow_next.png"/></td><td id="NOTICE_DATE"></td><td id="NOTICE_TITLE"></td></tr>');
-                    $('#NOTICE_DATE:last').text(result[i].NOTICE_DATE);
-                    $('#NOTICE_TITLE:last').text(result[i].NOTICE_TITLE);
+                    $('.table').append('<tr><td><img src="arrow_next.png"/></td><td class="NOTICE_DATE"></td><td class="NOTICE_TITLE"></td></tr>');
+                    $('.NOTICE_DATE:last').text(result[i].NOTICE_DATE);
+                    $('.NOTICE_TITLE:last').text(result[i].NOTICE_TITLE);
                 }
                 $('.table tr').click(function(){
                                    window.location.href = X.html.setInputs(result[$(this).index()],'NoticeDetail.html');
@@ -30,17 +31,14 @@
                
             }
             $('.overlayX').css('display','none');
+       
         }
         
        function getNotice(){
             var data = {};
             data.PHONE = X.cookie.get('username');
-            //data.PHONE ='xndq';
             data.PHONE_TYPE = '';
-            
-            //alert(data.PHONE+'--'+data.PHONE_TYPE);
-            
-            X.html.setOverlay();
+            X.html.setOverlay();           
             X.soap(data,'NoticeService','getNotice','noticeResult');
         }
         function getPay(){
