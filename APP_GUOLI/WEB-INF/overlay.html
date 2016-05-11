@@ -4,23 +4,23 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 	<style type="text/css">
-		body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
-		#allmap {height:30%; width: 100%;}
+        body, html{width: 100%;height:100%;margin:0;font-family:"微软雅黑";}
+		#allmap {height:100%; width: 100%;}
 		#control{width:100%;}
         .vehicle_top {
             background-image: url(task.png);
-            font-size: 30px;
+            /*font-size: 30px;*/
             color: #FFF;
             height: 64px;
             line-height:84px;
             width: 100%;
-            text-align: center;
+            /*text-align: center;*/
             position:fixed;
             top:0px;
             z-index:3;
         }
     .vehicle_top div{
-        width:50%;
+        /*width:50%;*/
         margin:0 auto;
     }
     .div_duan {
@@ -41,16 +41,33 @@
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=G6aCrTEWg8gGVbbE0xZWwb2h"></script>
 	<title>stroke</title>
     <script>
+        var map;
+        $(function(){
+          map = new BMap.Map("allmap");
+          });
         function callByParent(){
             map.clearOverlays();
             var cookie = window.parent.document.getElementById('points').value;
+            var vehicle_id = window.parent.document.getElementById('vehicle_no').value;
+            var trans_group_id = window.parent.document.getElementById('trans_group_id').value;
+            $('.vehicle_top span:eq(0)').text(trans_group_id);
+            $('.vehicle_top span:eq(1)').text(vehicle_id);
              var latlng = cookie.replace('[','').replace(']','').split(','),points = new Array();
              for(var i=0;i<latlng.length;i++){
-             points.push(new BMap.Point(latlng[i++],latlng[i]));
+               points.push(new BMap.Point(Number(latlng[i++]),Number(latlng[i])));
              }
              map.centerAndZoom(points[0], 15);
              map.enableScrollWheelZoom();
-             var polyline = new BMap.Polyline(points, {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});
+             var polyline = new BMap.Polyline(points, {strokeColor:"blue", strokeWeight:2, strokeOpacity:1});
+            
+           /* map.centerAndZoom(new BMap.Point(116.404, 39.915), 15);
+            map.enableScrollWheelZoom();
+            
+            var polyline = new BMap.Polyline([
+                                              new BMap.Point(116.399, 39.910),
+                                              new BMap.Point(116.405, 39.920),
+                                              new BMap.Point(116.423493, 39.907445)
+                                              ], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});*/
              map.addOverlay(polyline);
         }
     function callToParent(){
@@ -65,12 +82,10 @@
                 <img src="arrow.png">
                     </a>
         </div>
-        <div>历史轨迹</div>
+        合同号:<span></span>
+        车牌号:<span></span>
     </div>
 	<div id="allmap"></div>
 </body>
 </html>
-<script type="text/javascript">
-	var map = new BMap.Map("allmap");
-</script>
 

@@ -27,6 +27,8 @@ function resultList(jsonResult){
                             var data = {};
                             data.TRS_ID = resultData[$(this).index()].TRS_ID;
                             data.USER_ID = resultData[$(this).index()].DRIVER_TEL;
+                            $('#vehicle_no').val(resultData[$(this).index()].VEHICLE_ID);
+                            $('#trans_group_id').val(resultData[$(this).index()].TRANS_GROUP_ID);
                             X.html.setOverlay();
                             X.soap(data,'LocusService','getLocation','locationResult');
                             }});
@@ -39,11 +41,11 @@ function locationResult(jsonResult){
         return;
     }
     var t = '[';
-    var sep = (jsonResult.result.length - 1)/8;
-    sep = parseInt(sep) == 0 ? 1 : sep;
-    for(var i=0;i<parseInt(sep);i++){
-        if(!X.getObjLenOrCompare(jsonResult.result[i*parseInt(sep)],0)) continue;
-        t = t + jsonResult.result[i*parseInt(sep)].LNG + ',' + jsonResult.result[i*parseInt(sep)].LAT + ',';
+    var sep = jsonResult.result.length;
+    //sep = parseInt(sep) == 0 ? 1 : sep;
+    for(var i=0;i<sep;i++){
+        if(!X.getObjLenOrCompare(jsonResult.result[i],0)) continue;
+        t = t + jsonResult.result[i].LNG + ',' + jsonResult.result[i].LAT + ',';
     }
     /*if(sep != parseInt(sep)){
         t = t + jsonResult.result[jsonResult.result.length - 1].LNG + ',' + jsonResult.result[jsonResult.result.length - 1].LAT + ',';
@@ -67,7 +69,7 @@ function locationResult(jsonResult){
  	 <img src="arrow.png">
   	 </a>
    </div>
-   <div>运单列表</div>
+ <div>历史轨迹</div>
 </div>
 
 <div class="div_duan"></div>
@@ -88,5 +90,7 @@ function locationResult(jsonResult){
 </div>
 <div class="overlayHtml"><iframe src="" name="frame"></iframe></div>
 <input type="hidden" value="" id="points"/>
+<input type="hidden" value="" id="vehicle_no"/>
+<input type="hidden" value="" id="trans_group_id"/>
 </body>
 </html>

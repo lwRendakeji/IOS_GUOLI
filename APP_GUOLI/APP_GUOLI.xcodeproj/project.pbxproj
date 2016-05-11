@@ -264,6 +264,7 @@
 		52EDA9981C228ED40014CBCD /* yingyongfuwushezhi.css in Resources */ = {isa = PBXBuildFile; fileRef = 52EDA8AF1C228ED40014CBCD /* yingyongfuwushezhi.css */; };
 		52EDA9991C228ED40014CBCD /* yingyongfuwushezhi.html in Resources */ = {isa = PBXBuildFile; fileRef = 52EDA8B01C228ED40014CBCD /* yingyongfuwushezhi.html */; };
 		52F6223F1C35347900C3E184 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52F6223E1C35347900C3E184 /* Images.xcassets */; };
+		52F973021CE1A7D80022350B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F973011CE1A7D80022350B /* Reachability.m */; };
 		52FE95F31C30D4F800E84235 /* caozuoshuoming.html in Resources */ = {isa = PBXBuildFile; fileRef = 52FE95F21C30D4F800E84235 /* caozuoshuoming.html */; };
 		52FE95F51C30D50F00E84235 /* caozuoshuoming.css in Resources */ = {isa = PBXBuildFile; fileRef = 52FE95F41C30D50F00E84235 /* caozuoshuoming.css */; };
 		52FE95FF1C30D71600E84235 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52FE95FC1C30D71600E84235 /* Default-568h@2x.png */; };
@@ -546,6 +547,8 @@
 		52EDA8B01C228ED40014CBCD /* yingyongfuwushezhi.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = yingyongfuwushezhi.html; path = "WEB-INF/yingyongfuwushezhi.html"; sourceTree = "<group>"; };
 		52EDA99A1C228F6C0014CBCD /* StaticRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaticRef.h; path = APP_GUOLI/StaticRef.h; sourceTree = "<group>"; };
 		52F6223E1C35347900C3E184 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		52F973001CE1A7D10022350B /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		52F973011CE1A7D80022350B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		52FE95F21C30D4F800E84235 /* caozuoshuoming.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = caozuoshuoming.html; path = "WEB-INF/caozuoshuoming.html"; sourceTree = "<group>"; };
 		52FE95F41C30D50F00E84235 /* caozuoshuoming.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = caozuoshuoming.css; path = "WEB-INF/caozuoshuoming.css"; sourceTree = "<group>"; };
 		52FE95FC1C30D71600E84235 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -681,6 +684,8 @@
 		52E262D31C0EDBEA00AAE3B5 /* APP_GUOLI */ = {
 			isa = PBXGroup;
 			children = (
+				52F973011CE1A7D80022350B /* Reachability.m */,
+				52F973001CE1A7D10022350B /* Reachability.h */,
 				52EB1B291C22AAA900EA9053 /* Util.h */,
 				52EB1B2A1C22AAA900EA9053 /* Util.m */,
 				52B802431C1173A80049EF36 /* User.h */,
@@ -1264,6 +1269,7 @@
 				52E262DA1C0EDBEA00AAE3B5 /* main.m in Sources */,
 				52E262DE1C0EDBEA00AAE3B5 /* GUOLIAppDelegate.m in Sources */,
 				52E262E71C0EDBEA00AAE3B5 /* GUOLIViewController.m in Sources */,
+				52F973021CE1A7D80022350B /* Reachability.m in Sources */,
 				52B802421C1173A00049EF36 /* RendaKeychain.m in Sources */,
 				52B802451C1173A80049EF36 /* User.mm in Sources */,
 				52EB1B2B1C22AAA900EA9053 /* Util.m in Sources */,
