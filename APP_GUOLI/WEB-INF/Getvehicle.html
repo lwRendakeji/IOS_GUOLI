@@ -18,8 +18,8 @@
                               });
       historyCondition = X.html.getInputs();
       $('.detailBody').empty();
-      //$("#dianji_CityList").text(X.isEmpty(X.cookie.get('cityname')) ? '' : X.cookie.get('cityname'));
-      $("#dianji_CityList").text('城市');
+      $("#dianji_CityList").text(X.isEmpty(X.cookie.get('cityname')) ? '城市' : X.cookie.get('cityname'));
+      //$("#dianji_CityList").text('城市');
       if(X.getObjLenOrCompare(historyCondition,0)){
       getVehicleHistory();
       }else{
@@ -37,9 +37,11 @@
           
           data.LAT = X.cookie.get("lat");
           data.LNG = X.cookie.get("lng");
-          if(($("#dianji_CityList").val())!='城市')data.CITY = $('#dianji_CityList').text();
-          X.html.setOverlay();
-          X.soap(data,'GetVehicle','getVehicleAround');
+          if(($("#dianji_CityList").val())!='城市'){
+              data.CITY = $('#dianji_CityList').text();
+              X.html.setOverlay();
+              X.soap(data,'GetVehicle','getVehicleAround');
+          }
       }
 
 function getVehicleHistory(){

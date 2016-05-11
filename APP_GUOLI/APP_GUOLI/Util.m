@@ -43,26 +43,15 @@
 +(BOOL) isConnected{
     Reachability *reach = [Reachability reachabilityWithHostName:@"www.apple.com"];
     NetworkStatus status = [reach currentReachabilityStatus];
-    BOOL isConn = false;
-    NSString *conResult = @"";
     switch (status) {
-        case NotReachable:
-            conResult = @"Not Reachable";
-            break;
         case ReachableViaWiFi:
-            isConn = true;
-            conResult = @"Reachable via WIFI";
-            break;
         case ReachableViaWWAN:
-            isConn = true;
-            conResult = @"Reachable via WWAN";
-            break;
+            return true;
+        case NotReachable:
         default:
-            conResult = @"Unknown";
-            break;
+            return false;
     }
-    NSLog(@"ConnectionStatus:%@",conResult);
-    return isConn;
+    return false;
 }
 +(void) writeToFile:(NSString *)fileName data:(NSMutableDictionary *)data{
     NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
@@ -78,9 +67,12 @@
     NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
                           stringByAppendingPathComponent:fileName];
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSLog(@"filePath:%@",filePath);
+//    NSLog(@"filePath:%@",filePath);
     if(![fileManager fileExistsAtPath:filePath]) return nil;
     return [NSMutableDictionary dictionaryWithContentsOfFile:filePath];
+}
++(float) getVersion{
+    return [[[UIDevice currentDevice] systemVersion] floatValue];
 }
 /*-(void) uploadImage:(NSString *)url user_id:(NSString *)user_id index:(NSString *)index trs_id:(NSString *)trs_id role_id:(NSString *)role_id delegate:(nullable id)delegate imageData:(NSMutableDictionary *)imageData imageName:(NSMutableDictionary *)imageName{
     if([imageData count] == 0) return;
