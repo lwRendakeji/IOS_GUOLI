@@ -22,7 +22,7 @@
             if(result.length>0){
                 for(var i=0;i<result.length;i++){
                     if(!X.getObjLenOrCompare(result[i],0)) continue;
-                    $('.table').append('<tr><td><img src="arrow_next.png"/></td><td class="NOTICE_DATE"></td><td class="NOTICE_TITLE"></td></tr>');
+                    $('.table').append('<tr height="40"><td><img src="arrow_next.png"/></td><td class="NOTICE_DATE"></td><td class="NOTICE_TITLE"></td></tr>');
                     $('.NOTICE_DATE:last').text(result[i].NOTICE_DATE);
                     $('.NOTICE_TITLE:last').text(result[i].NOTICE_TITLE);
                 }
@@ -109,16 +109,13 @@
 $('.notice').css({"overflow":"scroll"});
 
 if(X.cookie.get('iphoneversion')==6){
-    $('.notice').css({"height":"460px","width":"100%"});
-    $('body').css({"height":"460px"});
+    $('.notice').css({"height":"400px","width":"100%"});
 };
 if(X.cookie.get('iphoneversion')==4){
     $('notice').css({"height":"360px","width":"100%"});
-    $('body').css({"height":"360px"});
 }
 if(X.cookie.get('iphoneversion')=='ipad'){ //ipad
     $('.notice').css({"height":"1000px","width":"100%"});
-    $('body').css({"height":"1000px"});
 }
 
 $('.notice').scroll(function() {
@@ -145,9 +142,10 @@ $('.notice').scroll(function() {
 function clickDetails_1(){
     if($('.detailBody').length > 0){
         $('.detailBody').remove();
-        ROWNUMBER="0";
-        flag=false;
     }
+    ROWNUMBER="0";
+    flag=false;
+    $('.table tbody').empty();
     <!--通知资讯-->
 	$("#tongzi").css("border-bottom","solid 1px #F00");
 	$("#qita").css("border-bottom","none");
@@ -159,9 +157,10 @@ function clickDetails_1(){
 function clickDetails_3(){
     if($('.detailBody').length > 0){
         $('.detailBody').remove();
-        ROWNUMBER="0";
-        flag=false;
     }
+    ROWNUMBER="0";
+    flag=false;
+    $('.table tbody').empty();
     <!--其它消息-->
 	$("#tongzi").css("border-bottom","none");
 	$("#qita").css("border-bottom","solid 1px #F00");
