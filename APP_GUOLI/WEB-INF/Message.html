@@ -18,7 +18,7 @@
           });
         function noticeResult(jsonResult){
            result = jsonResult.result;
-            $('.table tbody').empty();
+            //$('.table tbody').empty();
             if(result.length>0){
                 for(var i=0;i<result.length;i++){
                     if(!X.getObjLenOrCompare(result[i],0)) continue;
@@ -47,7 +47,7 @@
             data.PHONE = X.cookie.get('username');
             data.PHONE_TYPE = '';
             data.ROWNUMBER = ROWNUMBER;
-            X.html.setOverlay();           
+            X.html.setOverlay();
             X.soap(data,'NoticeService','getNotice','noticeResult');
         }
         function getPay(){
