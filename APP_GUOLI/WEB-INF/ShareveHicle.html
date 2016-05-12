@@ -54,7 +54,7 @@ function resultList(jsonResult){
   </div>
   <div class="vehicle_home">
    <a href="javascript:void(0);" onClick="X.city.showCitySelection('dianji_CityList');">
-   	 <span id="dianji_CityList"></span>
+   	 <div id="dianji_CityList"></div>
  	 <span><img src="city_qry.png"></span>
     </a>
   </div>
@@ -136,7 +136,8 @@ function resultList(jsonResult){
         function dd(){
             $('input[id="cityChoice"]').val('');
             $('input[id="cityChoice"]').blur();
-            $('.overlayCity').css('display','none');
+            if($('#hzw_city_picker').length > 0) $('#hzw_city_picker').remove();
+            //$('.overlayCity').css('display','none');
             
         }
         
@@ -153,6 +154,5 @@ function resultList(jsonResult){
                 <ul></ul>
             </div>
         </div> -->
-    </div>
 </body>
 </html>
