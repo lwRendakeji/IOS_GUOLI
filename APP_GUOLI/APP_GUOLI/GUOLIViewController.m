@@ -90,8 +90,6 @@
             iphoneVersion = @"ipad";
         }
         
-         [user setUserInfo:@"iphoneversion" value:@"6"];//模拟器测试
-        
         //获取首页图片
         self.callMethod = @"getMainPic";
         [self soap:@"ExecSqlService" methodName:@"getPicDir" fields:@"<func_mode>FUNC01</func_mode>"];
