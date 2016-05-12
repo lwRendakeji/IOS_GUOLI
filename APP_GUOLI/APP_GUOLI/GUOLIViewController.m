@@ -90,7 +90,7 @@
             iphoneVersion = @"ipad";
         }
         
-//         [user setUserInfo:@"iphoneversion" value:@"6"];//模拟器测试
+         [user setUserInfo:@"iphoneversion" value:@"6"];//模拟器测试
         
         //获取首页图片
         self.callMethod = @"getMainPic";
