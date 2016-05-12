@@ -264,7 +264,7 @@
                   $('input[id="cityChoice"]').blur();
                  
               }else{
-                  alert('请输入城市名称');
+                  X.dialog('请输入城市名称');
               }
               
           }
@@ -272,9 +272,9 @@
    //遮盖层点击事件
    function dd(){
        $('input[id="cityChoice"]').val('');
-      $('input[id="cityChoice"]').blur();
+      //$('input[id="cityChoice"]').blur();
       if($('#hzw_city_picker').length > 0) $('#hzw_city_picker').remove();
-      //$('.overlayCity').css('display','none');
+      $('.overlayCity').css('display','none');
     
    }
    
